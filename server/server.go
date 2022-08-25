@@ -139,7 +139,7 @@ func (s *Server) initRouter() {
 	s.router.GET("/api/indexer", func(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		w.Header().Set("Cache-Control", "no-cache")
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
-		w.Header().Set("X-Content-Type-Options","nosniff")
+		w.Header().Set("X-Content-Type-Options", "nosniff")
 		fmt.Fprintf(w, `{"indexing": %t, "progress": %f}`, s.Indexer.Progress != 0, s.Indexer.Progress)
 	})
 
@@ -407,6 +407,7 @@ func (s *Server) handleSeries(w http.ResponseWriter, r *http.Request, p httprout
 }
 
 func (s *Server) handleBooks(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	s.RefreshBookIndex()
 	bl, _ := s.Indexer.BookList().SortBy("modified-desc")
 	bl, _ = bl.SortBy(r.URL.Query().Get("sort"))
 

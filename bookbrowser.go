@@ -121,7 +121,7 @@ func main() {
 		if len(s.Indexer.BookList()) == 0 {
 			log.Fatalln("Fatal error: no books found")
 		}
-		checkUpdate()
+		//checkUpdate()
 	}()
 
 	sigusr.Handle(func() {
